@@ -14,17 +14,18 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package goapp
+package feed
 
 import (
 	"bytes"
-	"code.google.com/p/go.net/html"
-	"code.google.com/p/go.net/html/atom"
 	"errors"
 	"io"
+
+	"code.google.com/p/go.net/html"
+	"code.google.com/p/go.net/html/atom"
 )
 
-var ErrNoRssLink = errors.New("No rss link found")
+var ErrNoFeedLink = errors.New("No feed link found")
 
 func Autodiscover(b []byte) (string, error) {
 	r := bytes.NewReader(b)
@@ -34,7 +35,7 @@ func Autodiscover(b []byte) (string, error) {
 			if err := z.Err(); err == io.EOF {
 				break
 			} else {
-				return "", ErrNoRssLink
+				return "", ErrNoFeedLink
 			}
 		}
 		t := z.Token()
